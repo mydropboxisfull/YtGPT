@@ -13,19 +13,9 @@ const GetCaptions = async (videoLink) => {
 
   const formatCaptions = (captionsData) => {
     let formattedCaptions = '';
-    let includeTimestamp = false;
 
-    captionsData.forEach((caption, index) => {
-      if (includeTimestamp) {
-        formattedCaptions += `[${caption.start}] ${caption.text} `;
-      } else {
-        formattedCaptions += `${caption.text} `;
-      }
-
-      // Include timestamp every third time
-      if ((index + 1) % 3 === 0) {
-        includeTimestamp = !includeTimestamp;
-      }
+    captionsData.forEach((caption) => {
+      formattedCaptions += `[${caption.start}] ${caption.text} `;
     });
 
     return formattedCaptions;
