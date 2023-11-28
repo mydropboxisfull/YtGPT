@@ -3,7 +3,8 @@ import Message from './Message';
 import MessageInput from './MessageInput';
 import { GetCaptions } from '../GetCaptions';
 
-const API_KEY = process.env.GPT_KEY
+
+const API_KEY = ""
 
 const systemMessage = {
     "role": "system",
