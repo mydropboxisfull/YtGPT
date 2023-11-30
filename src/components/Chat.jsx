@@ -4,7 +4,7 @@ import MessageInput from './MessageInput';
 import { GetCaptions } from '../GetCaptions';
 
 
-const API_KEY = "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"
+
 
 const systemMessage = {
     "role": "system",
