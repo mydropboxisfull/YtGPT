@@ -22,7 +22,7 @@ const GetCaptions = async (videoLink) => {
   };
 
   try {
-    const response = await fetch(`http://localhost:3001/captions?videoId=${videoId}`);
+    const response = await fetch(`/captions?videoId=${videoId}`);
     const captionsData = await response.json();
     return formatCaptions(captionsData);
   } catch (error) {

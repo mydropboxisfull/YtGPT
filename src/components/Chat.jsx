@@ -76,7 +76,7 @@ function Chat() {
         };
 
         try {
-            const response = await fetch("http://localhost:3001/openai", {
+            const response = await fetch("/openai", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
