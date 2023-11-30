@@ -4,7 +4,7 @@ import MessageInput from './MessageInput';
 import { GetCaptions } from '../GetCaptions';
 
 
-const API_KEY = ""
+const API_KEY = "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"
 
 const systemMessage = {
     "role": "system",
@@ -72,37 +72,38 @@ function Chat() {
         });
 
         const apiRequestBody = {
-            "model": "gpt-3.5-turbo-16k-0613",
-            "messages": [
-                systemMessage,
-                ...apiMessages
-            ]
+            "message": apiMessages[apiMessages.length - 1].content, // Send only the latest user message
         };
 
-        await fetch("https://api.openai.com/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer " + API_KEY,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(apiRequestBody)
-        })
-            .then((data) => data.json())
-            .then((data) => {
-                const chatGptResponse = {
-                    message: data.choices[0].message.content,
-                    sender: "ChatGPT",
-                };
-
-                const secondToLastMessage = chatMessages[chatMessages.length - 2];
-                if (secondToLastMessage && (secondToLastMessage.message.includes('youtube.com') || secondToLastMessage.message.includes('youtu.be'))) {
-                    chatMessages.splice(-1, 1);
-                }
-
-                setMessages([...chatMessages, chatGptResponse]);
-                setIsTyping(false);
+        try {
+            const response = await fetch("http://localhost:3001/openai", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(apiRequestBody),
             });
+
+            const data = await response.json();
+
+            const chatGptResponse = {
+                message: data.choices[0].message.content,
+                sender: "ChatGPT",
+            };
+
+            const secondToLastMessage = chatMessages[chatMessages.length - 2];
+            if (secondToLastMessage && (secondToLastMessage.message.includes('youtube.com') || secondToLastMessage.message.includes('youtu.be'))) {
+                chatMessages.splice(-1, 1);
+            }
+
+            setMessages([...chatMessages, chatGptResponse]);
+            setIsTyping(false);
+        } catch (error) {
+            console.error('Error making OpenAI request to the server:', error);
+            setIsTyping(false);
+        }
     }
+
 
 
 
