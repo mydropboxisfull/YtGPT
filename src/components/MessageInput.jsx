@@ -20,7 +20,6 @@ const MessageInput = ({ onSend }) => {
         <div className="flex items-center space-x-2 pb-20 px-5  md:pb-10 md:px-10 xl:pb-[18rem]">
             <div className="relative flex-grow">
                 <input
-                    onFocus="window.scrollTo(0, 0);"
                     type="text"
                     placeholder="Please enter a valid YouTube link..."
                     value={message}

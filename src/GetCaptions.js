@@ -1,6 +1,6 @@
 const GetCaptions = async (videoLink) => {
   const extractVideoId = (link) => {
-    const pattern = /(?:youtube.com\/watch\?v=|youtu.be\/|youtube.com\/embed\/|youtube.com\/v\/|youtube.com\/playlist\?list=)([\w-]+)/;
+    const pattern = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i;
     const match = link.match(pattern);
     return match ? match[1] : null;
   };
@@ -16,6 +16,7 @@ const GetCaptions = async (videoLink) => {
 
     captionsData.forEach((caption) => {
       formattedCaptions += `[${caption.start}] ${caption.text} `;
+
     });
 
     return formattedCaptions;

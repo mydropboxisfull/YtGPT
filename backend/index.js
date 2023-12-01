@@ -49,7 +49,7 @@ app.post('/openai', async (req, res) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                model: "gpt-3.5-turbo-16k-0613",
+                model: "gpt-3.5-turbo-1106",
                 messages: [{ role: "user", content: message }],
             }),
         });
