@@ -3,6 +3,8 @@ import cors from 'cors';
 import { getSubtitles } from 'youtube-captions-scraper';
 import path from 'path';
 import fetch from 'node-fetch'; // Import 'node-fetch' for making requests on the server side
+import { getVideoInfo } from './getVideoInfo.js';
+
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -60,10 +62,29 @@ app.post('/openai', async (req, res) => {
     }
 });
 
+
+// Youtube title and desc meta
+app.get('/video-info', async (req, res) => {
+    const videoURL = req.query.videoURL;
+
+    try {
+        const videoInfo = await getVideoInfo(videoURL);
+        res.json(videoInfo);
+    } catch (error) {
+        console.error('Error fetching video information:', error.message);
+        res.status(500).json({ error: 'Unable to fetch video information' });
+    }
+});
+
+
+
 // Serve the index.html file for all other routes
 app.get('*', (req, res) => {
     res.sendFile(path.resolve('dist/index.html'));
 });
+
+
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
